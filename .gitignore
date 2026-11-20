@@ -1,0 +1,41 @@
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+Thumbs.db
+*.log
+.env
+.env*
+!.env.example
+
+# AI Studio & Gemini
+.aistudio/
+.aistudio*
+.gemini/
+GEMINI.md
+metadata.json
+public/assets/aistudio/
+
+# Firebase / Cloud / Credentials / Keys
+firebase-applet-config.json
+firebase_applet_config.xml
+firebase-blueprint.json
+google-services.json
+GoogleService-Info.plist
+credentials*.json
+client_secret*.json
+*service-account*.json
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Local IDE / Agent / Personal Config
+.vscode/
+.idea/
+.cursor/
+.claude/
+CLAUDE.md
+AGENTS.md
+

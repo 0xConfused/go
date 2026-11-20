@@ -1,0 +1,415 @@
+/* SPDX-License-Identifier: AGPL-3.0-or-later */
+
+@import "tailwindcss";
+
+:root {
+  --color-bg: #0d0d0d;
+  --color-surface: #141414;
+  --color-surface-raised: #262626;
+  --color-border: #383838;
+  --color-fg: #f0f0f0;
+  --color-fg-muted: #8c8c8c;
+  --color-accent: #c30800;
+  --color-accent-hover: #f60a00;
+  --color-accent-fg: #f3f3f7;
+  --color-secondary: #c300bb;
+  --color-success: #bbc300;
+  --color-warning: #c36a00;
+  --color-error: #c3005a;
+  --color-seed-01: #770500;
+  --color-seed-02: #6b665a;
+  --color-seed-03: #333333;
+  --topbar-height: 65px;
+}
+
+.theme-dark {
+  --color-bg: #0d0d0d;
+  --color-surface: #1a1a1a;
+  --color-surface-raised: #262626;
+  --color-border: #383838;
+  --color-fg: #f0f0f0;
+  --color-fg-muted: #8c8c8c;
+  --color-accent: #c30800;
+  --color-accent-hover: #f60a00;
+  --color-accent-fg: #f3f3f7;
+  --color-secondary: #c300bb;
+  --color-success: #bbc300;
+  --color-warning: #c36a00;
+  --color-error: #c3005a;
+  --color-seed-01: #770500;
+  --color-seed-02: #6b665a;
+  --color-seed-03: #333333;
+}
+
+@font-face {
+  font-family: 'Glitch Goblin';
+  src: url('/fonts/glitch-goblin.regular.ttf') format('truetype'),
+       url('https://st.1001fonts.net/download/font/glitch-goblin.regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-glitch {
+  font-family: 'Glitch Goblin', 'Rubik Glitch', 'Chakra Petch', monospace;
+}
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #0d0d0d;
+    color: #f0f0f0;
+  }
+  code, pre, kbd, samp {
+    font-family: 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #383838 #141414;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #141414;
+  border-radius: 0px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #383838;
+  border-radius: 0px;
+  border: 1px solid #2e2e2e;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #c30800;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* 0xCONFUSED Topbar / Header Styles (matching resume.0xconfused.com) */
+header.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(13, 13, 13, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--color-border, #383838);
+}
+
+.topbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 20px;
+  min-height: 64px;
+  max-width: 80rem;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.brand-logo-slot {
+  position: relative;
+  height: 64px;
+  width: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.brand-logo-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Subtle CRT Scanlines - constant slow drift masked to image transparency */
+.brand-logo-inner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 0px,
+    rgba(0, 0, 0, 1) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  opacity: 0.12;
+  z-index: 2;
+  animation: scanline-roll 8s linear infinite;
+  -webkit-mask-image: url("./skull-logo.png");
+  mask-image: url("./skull-logo.png");
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+/* Subtle CRT beam sweep overlay - constant slow periodic sweep masked to image transparency */
+.brand-logo-inner::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 14px;
+  top: -16px;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(195, 8, 0, 0.10) 50%,
+    transparent
+  );
+  opacity: 0;
+  z-index: 3;
+  animation: crt-sweep-constant 8s ease-in-out infinite;
+  -webkit-mask-image: url("./skull-logo.png");
+  mask-image: url("./skull-logo.png");
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+@keyframes scanline-roll {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 48px;
+  }
+}
+
+@keyframes crt-sweep-constant {
+  0% {
+    top: -16px;
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.10;
+  }
+  45% {
+    opacity: 0.10;
+  }
+  55% {
+    top: 68px;
+    opacity: 0;
+  }
+  100% {
+    top: 68px;
+    opacity: 0;
+  }
+}
+
+.brand-logo-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: none !important;
+  transform: none !important;
+}
+
+.brand-text-wrap {
+  position: relative;
+  z-index: 10;
+  min-width: 0;
+  padding: 4px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.brand-title-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.brand-glitch-text,
+#brandGlitchText {
+  font-family: 'Glitch Goblin', 'Rubik Glitch', 'Chakra Petch', monospace;
+  font-weight: 400;
+  font-size: 25px;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  color: var(--color-accent, #c30800);
+  cursor: pointer;
+  user-select: none;
+  margin: 0;
+  filter: drop-shadow(0 0 5px rgba(195, 8, 0, 0.35));
+}
+
+#brandGlitchText .brand-title,
+.brand-glitch-text .brand-title {
+  position: relative;
+  display: inline-block;
+  vertical-align: bottom;
+  color: var(--color-accent, #c30800);
+  padding: 6px 10px;
+  margin: -6px -10px;
+  text-shadow:
+    0 0 5px rgba(195, 8, 0, 0.55),
+    0 0 10px rgba(195, 8, 0, 0.35);
+  -webkit-mask-image: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 0px,
+    rgba(0, 0, 0, 1) 2px,
+    rgba(0, 0, 0, 0.82) 2px,
+    rgba(0, 0, 0, 0.82) 3px
+  );
+  mask-image: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 0px,
+    rgba(0, 0, 0, 1) 2px,
+    rgba(0, 0, 0, 0.82) 2px,
+    rgba(0, 0, 0, 0.82) 3px
+  );
+  -webkit-mask-size: 100% 48px;
+  mask-size: 100% 48px;
+  -webkit-mask-repeat: repeat-y;
+  mask-repeat: repeat-y;
+  animation: scanline-mask-roll 8s linear infinite;
+}
+
+@keyframes scanline-mask-roll {
+  0% {
+    -webkit-mask-position: 0 0;
+    mask-position: 0 0;
+  }
+  100% {
+    -webkit-mask-position: 0 48px;
+    mask-position: 0 48px;
+  }
+}
+
+.brand-mod {
+  font-family: 'Fira Code', monospace;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--color-secondary, #c300bb);
+  letter-spacing: 0.04em;
+}
+
+.brand-tagline {
+  font-family: 'Fira Code', monospace;
+  font-size: 11.5px;
+  color: var(--color-fg-muted, #8c8c8c);
+  margin-top: 4px;
+  white-space: normal;
+  max-width: none;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.9));
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Fira Code', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-radius: 0;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  border: 1px solid #383838;
+}
+
+/* 0xCONFUSED Unified Footer Styles */
+.footer-identity {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.footer-handle {
+  font-family: 'Glitch Goblin', var(--font-head, 'Plus Jakarta Sans'), 'Fira Code', monospace;
+  font-size: 13.5px;
+  letter-spacing: .08em;
+  color: var(--color-accent, #c30800);
+  font-weight: 400;
+  vertical-align: baseline;
+  transition: color 0.15s ease;
+  user-select: none;
+}
+
+.footer-handle:hover {
+  color: var(--color-accent-hover, #f60a00);
+}
+
+.footer-sep {
+  color: var(--border-primary, #383838);
+  user-select: none;
+}
+
+.footer-name {
+  color: var(--text-body, #d4d4d8);
+  font-weight: 600;
+}
+
+.footer-role {
+  color: var(--text-dim, #737373);
+  font-size: 11.5px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.footer-spec {
+  font-family: var(--font-mono, 'Fira Code', monospace);
+  color: var(--text-dim, #737373);
+  font-size: 11.5px;
+  letter-spacing: .04em;
+  padding-right: 4px;
+}
