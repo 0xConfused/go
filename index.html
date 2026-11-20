@@ -25,6 +25,7 @@
           }
           HmrDummySocket.prototype.send = function() {};
           HmrDummySocket.prototype.close = function() {
+            var self = this;
             this.readyState = 3;
             var ev = new Event('close');
             this.dispatchEvent(ev);
@@ -80,6 +81,7 @@
     <link rel="icon" type="image/x-icon" href="./favicon.ico" />
     <link rel="icon" type="image/png" href="./skull-logo.png" />
     <link rel="apple-touch-icon" href="./skull-logo.png" />
+    <style>html, body { background-color: #0d0d0d; color: #f0f0f0; margin: 0; }</style>
   </head>
   <body class="bg-[#0d0d0d] text-[#f0f0f0] min-h-screen antialiased selection:bg-[#c30800] selection:text-[#f3f3f7]">
     <div id="root"></div>
